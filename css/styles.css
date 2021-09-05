@@ -139,3 +139,8 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.alineacion {
+  position: static;
+  float: right;
+}

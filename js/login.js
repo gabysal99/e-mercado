@@ -1,8 +1,3 @@
-// function login() {
-//     var nombre = document.getElementById("nombre");
-//     var contraseña = document.getElementById("contraseña");
-//     console.log(nombre, contraseña)
-// }
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -17,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function(e){
         else {
             if (user.value === "Gabi" && clave.value === "1234") {
                 alert("Bienvenido a la pagina :)")
+                localStorage.setItem('UsuarioLogueado', JSON.stringify({usuario: user.value}));
                 window.location = "inicio.html"
             }
             else {

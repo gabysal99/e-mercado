@@ -21,11 +21,23 @@
         <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
         <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
         <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+        <div class="py-2 d-none d-md-inline-block">
+          <p id="nombre" class="light-text"></p>
+          <button id="cerrarsesion">Cerrar Sesión</button>
+        </div>
       </div>
     </nav>
-  
-   <div id="productos"></div>
-
+    <div>
+      <input type="button" value="Precio: De $ a $$$" id="precioA" class="alineacion">
+      <input type="button" value="Precio: De $$$ a $" id="precioD" class="alineacion">
+      <input type="button" value="Relevancia" id="relevancia" class="alineacion">
+      <input type="search" placeholder="Buscar" id="buscar" class="alineacion">
+      <button id="filtro">Filtrar</button>
+      <button id="limpiar">Limpiar filtro</button>
+      <input type="number" id="min" min="0" max="17000">
+      <input type="number" id="max" min="0" max="17000">
+    </div>
+    <div id="productos"></div>
     <footer class="text-muted bg-light">
       <div class="container">
         <p class="float-right">
