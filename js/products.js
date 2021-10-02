@@ -5,6 +5,11 @@ var autosArray = [];
 var precioMin
 var precioMax
 
+function mostrarVehiculo(id) {
+    localStorage.setItem("auto", JSON.stringify({autoID: id}));
+    window.location = "product-info.html";
+}
+
 function showCategoriesList(array){
     let mostrarAutos = "";
 
@@ -20,16 +25,18 @@ function showCategoriesList(array){
                 <img src="` + auto.imgSrc + `" alt="` + auto.description + `" class="img-thumbnail">
             </div>
             <div>
-                <h4>`+ auto.name +`</h4> 
+                <h4>`+ auto.name +`</h4>
                 <p> `+ auto.description +`</p>
                 <p> `+ auto.currency + auto.cost +`</p>
-                <p> `+ auto.soldCount + ` artículos<p>
-                </div>
+                <p> `+ auto.soldCount + ` artículos</p>
+                <button onclick="mostrarVehiculo(`+ auto.id +`)" class="btn btn-primary">Ver más</button>
             </div>
             `}
         document.getElementById("productos").innerHTML = mostrarAutos;    
     }
 }
+
+
 
 document.addEventListener("DOMContentLoaded", function (e) {
     
