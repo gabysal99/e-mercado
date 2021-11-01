@@ -20,17 +20,20 @@ function showCategoriesList(array){
         ((precioMax == undefined) || (precioMax != undefined && parseInt(auto.cost) <= precioMax))) {
 
             mostrarAutos += `
-
-            <div>
-                <img src="` + auto.imgSrc + `" alt="` + auto.description + `" class="img-thumbnail">
-            </div>
-            <div>
-                <h4>`+ auto.name +`</h4>
-                <p> `+ auto.description +`</p>
-                <p> `+ auto.currency + auto.cost +`</p>
-                <p> `+ auto.soldCount + ` artículos</p>
-                <button onclick="mostrarVehiculo(`+ auto.id +`)" class="btn btn-primary">Ver más</button>
-            </div>
+                <div class="col col-md-6 col-lg-4">
+                    <div class="card">
+                        <div>
+                            <img src="` + auto.imgSrc + `" alt="` + auto.description + `" class="card-img-top">
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">`+ auto.name + `</h4>
+                            <p class="card-text"> `+ auto.description + `</p>
+                            <p class="card-text"> `+ auto.currency + auto.cost + `</p>
+                            <p class="card-text"> `+ auto.soldCount + ` artículos vendidos</p>
+                            <button onclick="mostrarVehiculo(`+ auto.id +`)" class="btn btn-primary">Ver más</button>
+                        </div>
+                    </div>
+                </div>  
             `}
         document.getElementById("productos").innerHTML = mostrarAutos;    
     }

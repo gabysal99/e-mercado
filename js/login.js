@@ -20,5 +20,5 @@ document.addEventListener("DOMContentLoaded", function(e){
                 alert("Usuario: Gabi - Contraseña: 1234 ;)")
             }
         }
-        })
+    })
 });
