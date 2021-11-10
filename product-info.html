@@ -14,78 +14,29 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 </head>
+
 <body>
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="inicio.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="nombre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="cart.html">Ver Carrito</a>
-          <a class="dropdown-item" href="my-profile.html">Mi Perfil</a>
-          <a class="dropdown-item" id="cerrarsesion" href="index.html">Cerrar Sesión</a>
-        </div>
+      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
+      <div class="py-2 d-none d-md-inline-block">
+        <p id="nombre" class="light-text"></p>
+        <button id="cerrarsesion">Cerrar Sesión</button>
       </div>
     </div>
   </nav>
-
-  <!--Descripcion-->
-
-  <div id="desc" class="header"></div>
-  
-  <!--Imagenes-->
-
-  <div class="header column img">
-    <p id="img"></p>
-  </div>
-
-  <br><br><br>
-  
-  <!--Comentarios-->
-  <div id="comentarios"></div>
-  
-  <br><br><br>
-
-  <!--Caja para comentario-->
-
-  <div class="header row align-items-end">
-    <div class="col-md-8">
-      <form>
-        <div class="form-group">
-          <label>Usuario:</label>
-          <input class="form-control" type="text"  id="Usuario" required placeholder="Nombre de usuario">
-        </div>
-        <div class="form-group">
-          <label>Comentario</label>
-            <textarea id="comment" class="form-control" required placeholder="Escriba su reseña aqui"></textarea>
-          </label>
-        </div>
-        <div class="starts">
-          <ul id="pingStar">
-            <li rel="1" title="1  "> ★ </li>
-            <li rel="2" title="2  "> ★ </li>
-            <li rel="3" title="3  "> ★ </li>
-            <li rel="4" title="4  "> ★ </li>
-            <li rel="5" title="5  "> ★ </li>
-            <span id="dir"></span>
-          </ul>
-          <input type="hidden" value="" id="startP">
-        </div>
-        <button type="button" class="btn btn-primary" onclick="commentBox();">Enviar</button>
-      </form>
+  <div class="container p-5">
+    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
+      <h4 class="alert-heading">¡A trabajar! :)</h4>
+      <p>Esta sección corresponde a: Entrega 3 (Fecha de entrega: 19/09/2021) y Entrega 4 (Fecha de entrega: 03/10/2021).</p>
+      <hr>
+      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
     </div>
   </div>
-
-  <!--Productos relacionados-->
-
-  <div id="productosRel"></div>
-
-  <!--Pie de Pagina -->
-
   <footer class="text-muted">
     <div class="container">
       <p class="float-right">
