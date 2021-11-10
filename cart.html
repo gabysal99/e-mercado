@@ -40,6 +40,7 @@
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
+      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="nombre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         </button>
@@ -51,7 +52,7 @@
       </div>
     </div>
   </nav>
-  
+
   <div class="container">
     <h2 class="text-center">Mi Carrito</h2>
     <div class="row">
@@ -60,9 +61,11 @@
         <!-- Elementos del carrito -->
         <ul id="cart" class="list-group col-md-6"></ul>
         <hr>
+        <!-- Costo Envio -->
+        <p class="text-right">Costo de envio $<span id="costoenvio"></span></p>
         <!-- Precio total -->
         <p class="text-right">Total $<span id="total"></span></p>
-      </aside>
+        </aside>
     </div>
   </div>
   <br><br>
@@ -70,24 +73,24 @@
 
   <div class="container">
     <h2 class="text-center">Envío</h2>
-    <form>
+    <form id="myForm" novalidate>
       <h5>Dirección:</h5>
       <div class="form-row">
         <div class="form-group col-md-3">
           <label for="direccion"></label>
-          <input type="text" class="form-control" id="calle" placeholder="Calle" required>
+          <input type="text" class="form-control formuIn" id="calle" placeholder="Calle">
         </div>
         <div class="form-group col-md-3">
           <label for="direccion"></label>
-          <input type="number" class="form-control" id="numero" placeholder="Numero de Puerta">
+          <input type="number" class="form-control formuIn" id="numero" placeholder="Numero de Puerta">
         </div>
         <div class="form-group col-md-3">
           <label for="direccion"></label>
-          <input type="text" class="form-control" id="esquina" placeholder="Esquina">
+          <input type="text" class="form-control formuIn" id="esquina" placeholder="Esquina">
         </div>
         <div class="form-group col-md-3">
           <label for="direccion"></label>
-          <select id="departamento" class="form-control" placeholder="Departamento">
+          <select id="departamento" class="form-control formuIn" placeholder="Departamento">
             <option>Artigas</option>
             <option>Canelones</option>
             <option>Cerro Largo</option>
@@ -110,19 +113,19 @@
           </select>
         </div>
       </div>
-  
+
       <div>
         <h5>Tipo de Envío:</h5>
         <div>
-          <input type="radio" id="premium" name="envio" value="premium" checked>
+          <input type="radio" id="premium" name="envio" value="premium">
           <label for="premium">Premium (2 a 5 días)</label>
         </div>
-        
+
         <div>
           <input type="radio" id="express" name="envio" value="express">
           <label for="express">Express (5 a 8 días)</label>
         </div>
-        
+
         <div>
           <input type="radio" id="standard" name="envio" value="standard">
           <label for="standard">Standard (12 a 15 días)</label>
@@ -137,58 +140,94 @@
     <div class="heading">
       <h2 class="text-center">Confirmar Compra</h2>
     </div>
-    <div class="payment">
-      <form>
-        <div class="form-group owner">
-          <label for="owner">Nombre Completo</label>
-          <input type="text" class="form-control" id="owner" required>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+      Medios de Pago
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Métodos de Pago</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="payment">
+              <form id="myForm" novalidate>
+                <h5 class="modal-title" id="staticBackdropLabel">Tarjeta de Credito</h5>
+                <div class="form-group owner">
+                  <label for="owner">Nombre Completo</label>
+                  <input type="text" class="form-control" id="owner">
+                </div>
+                <div class="form-group" id="card-number-field">
+                  <label for="cardNumber">Número de Tarjeta</label>
+                  <input type="text" class="form-control" id="cardNumber">
+                </div>
+                <div id="expiration-date">
+                  <label>Fecha de Expiración </label>
+                  <select>
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                  </select>
+                  <select>
+                    <option value="21"> 2021</option>
+                    <option value="22"> 2022</option>
+                    <option value="23"> 2023</option>
+                    <option value="24"> 2024</option>
+                    <option value="25"> 2025</option>
+                    <option value="26"> 2026</option>
+                  </select>
+                </div>
+                <div class="form-group CVV">
+                  <label for="cvv">CVV</label>
+                  <input type="text" class="form-control" id="cvv">
+                </div>
+              </form>
+
+              <hr>
+
+              <div>
+                <h5 class="modal-title" id="staticBackdropLabel">Transferencia Bancaria</h5>
+                <div>
+                  <input type="radio" id="cuentaC" name="cuentacorriente" value="cuentacorriente">
+                  <label for="cuentacorriente">Cuenta Corriente BROU - 00265487900001</label>
+                </div>
+                <div>
+                  <input type="radio" id="cuentaA" name="cuentaahorro" value="cuentaahorro">
+                  <label for="cuentaahorro">Caja de Ahorros BROU - 00265487900002</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Aceptar</button>
+          </div>
         </div>
-        <div class="form-group" id="card-number-field">
-          <label for="cardNumber">Número de Tarjeta</label>
-          <input type="text" class="form-control" id="cardNumber" required>
-        </div>
-        <div class="form-group" id="expiration-date">
-          <label>Fecha de Expiración: </label>
-          <select>
-            <option value="01">Enero</option>
-            <option value="02">Febrero</option>
-            <option value="03">Marzo</option>
-            <option value="04">Abril</option>
-            <option value="05">Mayo</option>
-            <option value="06">Junio</option>
-            <option value="07">Julio</option>
-            <option value="08">Agosto</option>
-            <option value="09">Septiembre</option>
-            <option value="10">Octubre</option>
-            <option value="11">Noviembre</option>
-            <option value="12">Diciembre</option>
-          </select>
-          <select>
-            <option value="21"> 2021</option>
-            <option value="22"> 2022</option>
-            <option value="23"> 2023</option>
-            <option value="24"> 2024</option>
-            <option value="25"> 2025</option>
-            <option value="26"> 2026</option>
-          </select>
-        </div>
-        <div class="form-group CVV">
-          <label for="cvv">CVV</label>
-          <input type="text" class="form-control" id="cvv" required>
-        </div>
-      </form>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Comprar</button>
+  </div>
+  <hr>
+  <div>
+    <button type="submit" class="btn btn-primary" id="feedback">Finalizar Compra</button>
   </div>
 
-  <div class="container p-5">
-    <div class="alert alert-danger" role="alert" style="position: relative; width:auto; top: 0;">
-      <h4 class="alert-heading">¡A trabajar! :)</h4>
-      <p>Esta sección corresponde a: Entrega 5 (Fecha de entrega: 17/10/2021) y Entrega 7 (Fecha de entrega: 14/11/2021).</p>
-      <hr>
-      <p class="mb-0">Para saber qué debes hacer, fijate en la actividad en CREA correspondiente a esta entrega.</p>
-    </div>
-  </div>
+  <br><br>
+
   <div id="spinner-wrapper">
     <div class="lds-ring">
       <div></div>

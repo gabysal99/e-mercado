@@ -17,7 +17,8 @@ function showCart(array){
             <p> `+ articles.name +`</p>
             <p><input type="number" onchange="subTotal(${articles.unitCost},${i})" value="${articles.count}" min="1" id="cantidad${i}"></p>
             <p> `+ articles.currency + articles.unitCost +`</p>
-            <p class="subsT" id="subT${i}">Subtotal `+ articles.currency +`${sub}</p>
+            <hr>
+            <p class="subsT" id="subT${i}">Subtotal $ `+ articles.currency +`${sub}</p>
         </div>
         `
         document.getElementById("cart").innerHTML = mostrarCarrito;    
@@ -33,6 +34,22 @@ function subTotal(unitCost, i) {
     cTotal();
 }
 
+function costoEnvio() {
+    let premium = document.getElementById("premium")
+    let express = document.getElementById("express")
+    let standard = document.getElementById("standard")
+    let costoE = document.getElementById("costoenvio")
+
+    if (premium.status === "ok") {
+        Math.round(costoE = subTotal() * .15)
+        Math.round(cTotal() = cTotal + (subTotal() * .15))
+    }
+    if (express.status === "ok") {
+        costoE = subTotal() * .07
+        cTotal() = cTotal() + (subTotal() * .07)
+    }
+}
+
 function cTotal() {
     let total = 0
     let subTotales = document.getElementsByClassName("subsT");
@@ -45,14 +62,6 @@ function cTotal() {
 
 document.addEventListener("DOMContentLoaded", function(e){
 
-    let moneda = "UYU"
-    let count = ""
-
-    if (moneda == "UYU") {
-        result = count;
-    } else {
-        result = count * 40
-    }
 
     getJSONData(CART_INFO_URL).then(function(resultObj){
         if (resultObj.status === "ok")
@@ -62,3 +71,105 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
     });
 });
+
+//Validaciones
+
+function miValidacion() {
+    let flag = true;
+    let msg = "";
+
+    let elementosDentro = document.getElementsByClassName("formuIn");
+    let elementosFuera = document.getElementsByClassName("formuOut");
+    document.getElementById("feedback").innerHTML = "";
+
+    //Envios
+    if (!document.querySelector('input[name="envio"]:checked')) {
+        alert('Seleccione un envio');
+        flag = false;
+    }
+
+    //Solo 1 vacío dentro:
+    let cuentoDentro = 0;
+    for (let i = 0; i < elementosDentro.length; i++) {
+        const element = elementosDentro[i];
+        if (element.value == "") {
+            cuentoDentro += 1;
+        }
+    }
+
+    if (cuentoDentro > 1) {
+        flag = false;
+        msg += "-Solo puede haber un campo vacío dentro del formulario <br>"
+    }
+
+    //Solo 1 vacío fuera:
+    let cuentoFuera = 0;
+    for (let i = 0; i < elementosFuera.length; i++) {
+        const element = elementosFuera[i];
+        if (element.value == "") {
+            cuentoFuera += 1;
+        }
+    }
+
+    if (cuentoFuera > 1) {
+        flag = false;
+        msg += "-Solo puede haber un campo vacío fuera del formulario <br>"
+    }
+
+
+    //Contenido igual:
+    let iguales = false;
+    for (let i = 0; i < elementosDentro.length; i++) {
+        const elementIn = elementosDentro[i];
+        for (let i = 0; i < elementosFuera.length; i++) {
+            const elementOut = elementosFuera[i];
+            if (elementIn.value !== "" && elementIn.value === elementOut.value) {
+                iguales = true;
+            }
+        }
+    }
+    if (!iguales) {
+        flag = false;
+        msg += "-El contenido de uno de los campos de adentro debe ser igual al de uno de los de afuera <br>"
+    }
+
+    //Campo min y max
+    let num = false;
+    for (let i = 0; i < elementosFuera.length; i++) {
+        const elementOut = elementosFuera[i];
+        if (parseInt(elementOut.value) > 5 && parseInt(elementOut.value) < 10) {
+            num = true;
+        }
+    }
+    if (!num) {
+        flag = false;
+        msg += "-Uno de los campos fuera del formulario debe tener un valor númerico entre 6 y 9<br>"
+    }
+
+    //minlength maxlength
+    let caracteres = false;
+    for (let i = 0; i < elementosDentro.length; i++) {
+        const elementIn = elementosDentro[i];
+        if (elementIn.value.length > 7 && elementIn.value.length < 15) {
+            caracteres = true;
+        }
+    }
+    if (!caracteres) {
+        flag = false;
+        msg += "-Uno de los campos dentro del formulario debe tener entre 8 y 14 caracteres<br>"
+    }
+
+    document.getElementById("feedback").innerHTML = msg;
+    return flag;
+}
+
+
+let form = document.getElementById("myForm");
+form.addEventListener('submit', function (event) {
+    if (!miValidacion()) {
+        event.preventDefault()
+        event.stopPropagation()
+    }else{
+        document.getElementById("feedback").innerHTML = "";
+    }
+})
