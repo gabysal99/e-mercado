@@ -2,10 +2,10 @@
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
 
-function showCart(array){
+function showCart(array) {
     let mostrarCarrito = "";
 
-    for(let i = 0; i < array.length; i++){ 
+    for (let i = 0; i < array.length; i++) {
         let articles = array[i];
         let sub = Math.round(articles.unitCost * articles.count)
         mostrarCarrito += `
@@ -14,23 +14,25 @@ function showCart(array){
             <img src="` + articles.src + `"width="80px" alt="" class="img-thumbnail">
         </div>
         <div>
-            <p> `+ articles.name +`</p>
+            <p> `+ articles.name + `</p>
             <p><input type="number" onchange="subTotal(${articles.unitCost},${i})" value="${articles.count}" min="1" id="cantidad${i}"></p>
-            <p> `+ articles.currency + articles.unitCost +`</p>
+            <p> `+ articles.currency + articles.unitCost + `</p>
             <hr>
-            <p class="subsT" id="subT${i}">Subtotal $ `+ articles.currency +`${sub}</p>
+            <p class="subsT" id="subT${i}">Subtotal ` + articles.currency + `${sub}</p>
         </div>
         `
-        document.getElementById("cart").innerHTML = mostrarCarrito;    
+        document.getElementById("cart").innerHTML = mostrarCarrito;
     }
     cTotal()
+    subTotal()
+    costoEnvio()
 }
 
 function subTotal(unitCost, i) {
     let count = parseInt(document.getElementById(`cantidad${i}`).value);
     let subT = Math.round(unitCost * count);
     document.getElementById(`subT${i}`).innerHTML = subT;
-    
+
     cTotal();
 }
 
@@ -38,34 +40,39 @@ function costoEnvio() {
     let premium = document.getElementById("premium")
     let express = document.getElementById("express")
     let standard = document.getElementById("standard")
-    let costoE = document.getElementById("costoenvio")
+    let costoE = 0
 
     if (premium.status === "ok") {
-        Math.round(costoE = subTotal() * .15)
-        Math.round(cTotal() = cTotal + (subTotal() * .15))
+        Math.round(costoE = subTotal(unitCost, i) * .15)
+        Math.round(cTotal() = cTotal + (subTotal(unitCost, i) * .15))
     }
     if (express.status === "ok") {
-        costoE = subTotal() * .07
-        cTotal() = cTotal() + (subTotal() * .07)
+        costoE = subTotal(unitCost, i) * .07
+        cTotal() = cTotal() + (subTotal(unitCost, i) * .07)
     }
+    if (standard.status === "ok") {
+        costoE = subTotal(unitCost, i) * .05
+        cTotal() = cTotal() + (subTotal(unitCost, i) * .05)
+    }
+    document.getElementById("costoenvio").innerHTML = costoE;
+    cTotal()
 }
 
 function cTotal() {
-    let total = 0
+    let total = ""
     let subTotales = document.getElementsByClassName("subsT");
-    for(let i = 0; i < subTotales.length; i++){
+    for (let i = 0; i < subTotales.length; i++) {
         total += parseInt(subTotales[i].innerHTML);
     }
-    
+
     document.getElementById("total").innerHTML = total
 }
 
-document.addEventListener("DOMContentLoaded", function(e){
+document.addEventListener("DOMContentLoaded", function (e) {
 
 
-    getJSONData(CART_INFO_URL).then(function(resultObj){
-        if (resultObj.status === "ok")
-        {
+    getJSONData(CART_INFO_URL).then(function (resultObj) {
+        if (resultObj.status === "ok") {
             cartArray = resultObj.data.articles;
             showCart(cartArray);
         }
@@ -76,10 +83,7 @@ document.addEventListener("DOMContentLoaded", function(e){
 
 function miValidacion() {
     let flag = true;
-    let msg = "";
 
-    let elementosDentro = document.getElementsByClassName("formuIn");
-    let elementosFuera = document.getElementsByClassName("formuOut");
     document.getElementById("feedback").innerHTML = "";
 
     //Envios
@@ -88,88 +92,38 @@ function miValidacion() {
         flag = false;
     }
 
-    //Solo 1 vacío dentro:
-    let cuentoDentro = 0;
-    for (let i = 0; i < elementosDentro.length; i++) {
-        const element = elementosDentro[i];
-        if (element.value == "") {
-            cuentoDentro += 1;
-        }
-    }
+    //Direccion de envio
+    let calle = document.getElementById("calle").value
+    let nump = document.getElementById("numero").value
+    let esq = document.getElementById("esquina").value
 
-    if (cuentoDentro > 1) {
+    if (calle == "" || nump == "" || esq == "") {
         flag = false;
-        msg += "-Solo puede haber un campo vacío dentro del formulario <br>"
+        alert("Algún campo de la direccion se encuentra vacío")
     }
 
-    //Solo 1 vacío fuera:
-    let cuentoFuera = 0;
-    for (let i = 0; i < elementosFuera.length; i++) {
-        const element = elementosFuera[i];
-        if (element.value == "") {
-            cuentoFuera += 1;
-        }
-    }
+    //Modal
+    let nombreC = document.getElementById("owner").value
+    let card = document.getElementById("cardNumber").value
+    let cvv = document.getElementById("cvv").value
+    let corriente = document.getElementById("cuentaC").value
+    let ahorro = document.getElementById("cuentaA").value
 
-    if (cuentoFuera > 1) {
+    if ((card == "" && nombreC == "" && cvv == "") || corriente == "" || ahorro == "") {
         flag = false;
-        msg += "-Solo puede haber un campo vacío fuera del formulario <br>"
+        alert('Debe seleccionar un método de pago');
     }
-
-
-    //Contenido igual:
-    let iguales = false;
-    for (let i = 0; i < elementosDentro.length; i++) {
-        const elementIn = elementosDentro[i];
-        for (let i = 0; i < elementosFuera.length; i++) {
-            const elementOut = elementosFuera[i];
-            if (elementIn.value !== "" && elementIn.value === elementOut.value) {
-                iguales = true;
-            }
-        }
-    }
-    if (!iguales) {
-        flag = false;
-        msg += "-El contenido de uno de los campos de adentro debe ser igual al de uno de los de afuera <br>"
-    }
-
-    //Campo min y max
-    let num = false;
-    for (let i = 0; i < elementosFuera.length; i++) {
-        const elementOut = elementosFuera[i];
-        if (parseInt(elementOut.value) > 5 && parseInt(elementOut.value) < 10) {
-            num = true;
-        }
-    }
-    if (!num) {
-        flag = false;
-        msg += "-Uno de los campos fuera del formulario debe tener un valor númerico entre 6 y 9<br>"
-    }
-
-    //minlength maxlength
-    let caracteres = false;
-    for (let i = 0; i < elementosDentro.length; i++) {
-        const elementIn = elementosDentro[i];
-        if (elementIn.value.length > 7 && elementIn.value.length < 15) {
-            caracteres = true;
-        }
-    }
-    if (!caracteres) {
-        flag = false;
-        msg += "-Uno de los campos dentro del formulario debe tener entre 8 y 14 caracteres<br>"
-    }
-
-    document.getElementById("feedback").innerHTML = msg;
+    
     return flag;
 }
 
-
-let form = document.getElementById("myForm");
-form.addEventListener('submit', function (event) {
-    if (!miValidacion()) {
-        event.preventDefault()
-        event.stopPropagation()
-    }else{
-        document.getElementById("feedback").innerHTML = "";
-    }
-})
+document.addEventListener("DOMContentLoaded", function (e) {
+    document.getElementById('feedback').addEventListener("click", function () {
+        if (!miValidacion()) {
+            event.preventDefault()
+            event.stopPropagation()
+        } else {
+            window.location = 'finalcompra.html';
+        }
+    })
+});

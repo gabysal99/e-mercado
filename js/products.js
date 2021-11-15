@@ -15,7 +15,6 @@ function showCategoriesList(array){
         ((precioMax == undefined) || (precioMax != undefined && parseInt(auto.cost) <= precioMax))) {
 
             mostrarAutos += `
-<<<<<<< HEAD
                 <div class="col col-md-6 col-lg-4">
                     <div class="card">
                         <div>
@@ -30,19 +29,6 @@ function showCategoriesList(array){
                         </div>
                     </div>
                 </div>  
-=======
-
-            <div>
-                <img src="` + auto.imgSrc + `" alt="` + auto.description + `" class="img-thumbnail">
-            </div>
-            <div>
-                <h4>`+ auto.name +`</h4> 
-                <p> `+ auto.description +`</p>
-                <p> `+ auto.currency + auto.cost +`</p>
-                <p> `+ auto.soldCount + ` artículos<p>
-                </div>
-            </div>
->>>>>>> parent of e861a70 (Entrega 4)
             `}
         document.getElementById("productos").innerHTML = mostrarAutos;    
     }

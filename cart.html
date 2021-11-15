@@ -36,11 +36,10 @@
 <body>
   <nav class="site-header sticky-top py-1 bg-dark">
     <div class="container d-flex flex-column flex-md-row justify-content-between">
-      <a class="py-2 d-none d-md-inline-block" href="index.html">Inicio</a>
+      <a class="py-2 d-none d-md-inline-block" href="inicio.html">Inicio</a>
       <a class="py-2 d-none d-md-inline-block" href="categories.html">Categorías</a>
       <a class="py-2 d-none d-md-inline-block" href="products.html">Productos</a>
       <a class="py-2 d-none d-md-inline-block" href="sell.html">Vender</a>
-      <a class="py-2 d-none d-md-inline-block" href="cart.html">Mi carrito</a>
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="nombre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         </button>
@@ -82,7 +81,7 @@
         </div>
         <div class="form-group col-md-3">
           <label for="direccion"></label>
-          <input type="number" class="form-control formuIn" id="numero" placeholder="Numero de Puerta">
+          <input type="text" class="form-control formuIn" id="numero" placeholder="Numero de Puerta">
         </div>
         <div class="form-group col-md-3">
           <label for="direccion"></label>
@@ -158,7 +157,7 @@
           </div>
           <div class="modal-body">
             <div class="payment">
-              <form id="myForm" novalidate>
+              <form id="myForm" novalidate class="credit">
                 <h5 class="modal-title" id="staticBackdropLabel">Tarjeta de Credito</h5>
                 <div class="form-group owner">
                   <label for="owner">Nombre Completo</label>
@@ -201,21 +200,21 @@
 
               <hr>
 
-              <div>
+              <div class="transf">
                 <h5 class="modal-title" id="staticBackdropLabel">Transferencia Bancaria</h5>
                 <div>
-                  <input type="radio" id="cuentaC" name="cuentacorriente" value="cuentacorriente">
+                  <input type="radio" id="cuentaC" name="transferencia" value="cuentacorriente">
                   <label for="cuentacorriente">Cuenta Corriente BROU - 00265487900001</label>
                 </div>
                 <div>
-                  <input type="radio" id="cuentaA" name="cuentaahorro" value="cuentaahorro">
+                  <input type="radio" id="cuentaA" name="transferencia" value="cuentaahorro">
                   <label for="cuentaahorro">Caja de Ahorros BROU - 00265487900002</label>
                 </div>
               </div>
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Aceptar</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
           </div>
         </div>
       </div>
@@ -223,7 +222,7 @@
   </div>
   <hr>
   <div>
-    <button type="submit" class="btn btn-primary" id="feedback">Finalizar Compra</button>
+    <button type="submit" class="btn btn-primary" id="feedback" href="finalcompra.html">Finalizar Compra</button>
   </div>
 
   <br><br>
